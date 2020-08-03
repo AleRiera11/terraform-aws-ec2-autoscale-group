@@ -1,6 +1,5 @@
 module "label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.16.0"
-  namespace   = var.namespace
   name        = var.name
   stage       = var.stage
   environment = var.environment
@@ -14,7 +13,7 @@ resource "aws_launch_template" "default" {
   count = var.enabled ? 1 : 0
 
   name_prefix = format("%s%s", module.label.id, var.delimiter)
-
+  use_name_prefix = false
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
     content {
@@ -146,6 +145,7 @@ resource "aws_autoscaling_group" "default" {
   count = var.enabled ? 1 : 0
 
   name_prefix               = format("%s%s", module.label.id, var.delimiter)
+  use_name_prefix = false
   vpc_zone_identifier       = var.subnet_ids
   max_size                  = var.max_size
   min_size                  = var.min_size
