@@ -13,7 +13,7 @@ resource "aws_launch_template" "default" {
   count = var.enabled ? 1 : 0
 
   name_prefix = format("%s%s", module.label.id, var.delimiter)
-  use_name_prefix = false
+  #use_name_prefix = false
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
     content {
@@ -145,7 +145,7 @@ resource "aws_autoscaling_group" "default" {
   count = var.enabled ? 1 : 0
 
   name_prefix               = format("%s%s", module.label.id, var.delimiter)
-  use_name_prefix = false
+  #use_name_prefix = false
   vpc_zone_identifier       = var.subnet_ids
   max_size                  = var.max_size
   min_size                  = var.min_size
